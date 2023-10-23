@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Infos</title>
+</head>
+<body style="background-color:antiquewhite;">
+    <center><h1>Your infos:</h1></center>
+    
+    <hr>
+
+    <ul>
+        <li>IP:<p id="ip-address">Loading...</p></li>
+        <li>Data e Hora:<p id="serverTime">Loading...</p>
+            <button id="botao" style="background-color:darkgrey;">Atualiza hora</button></li>
+        <br>
+        <li>Timezone:<p id="userLocalTime">Loading...</p></li>
+    </ul>  
+    
+    
+    
+
+    <script>
+        fetch('get_info.php')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip-address').textContent = data.ip;
+                document.getElementById('serverTime').textContent = data.serverTime;
+                document.getElementById('userLocalTime').textContent = data.timeZone;
+
+                //console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        document.getElementById("botao").addEventListener("click", function(){
+            fetch('get_info.php')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('serverTime').textContent = data.serverTime;
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
